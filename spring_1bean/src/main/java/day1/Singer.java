@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Singer {
+public class Singer { // vo, dto 객체들은 bean으로 관리하지 않음. -> Model객체
 	private int idx;
 	private String singer;
 	private List<String> albums;

@@ -23,7 +23,8 @@
 		<property name="dbFactory" value="Mybatis"></property>
 	</bean>
 	
-	<bean class="day1.Singer" id="singer">
+	<!-- scope 기본값은 singleton -->
+	<bean class="day1.Singer" id="singer" scope="prototype">
 		<property name="idx" value="12"></property>
 		<property name="singer" value="트와이스"></property>
 		<property name="albums">
