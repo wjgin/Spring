@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
 
@@ -18,6 +19,19 @@
 
 	<bean class="day1.BoardDao" id="boardDao">
 		<!-- bean이 아닌 String을 줄 때, value 이용 -->
+		<!-- 필드의 값을 String으로 직접 입력 -->
 		<property name="dbFactory" value="Mybatis"></property>
+	</bean>
+	
+	<bean class="day1.Singer" id="singer">
+		<property name="idx" value="12"></property>
+		<property name="singer" value="트와이스"></property>
+		<property name="albums">
+			<list>
+				<value>첫 번째 싱글</value>
+				<value>두 번째 정규</value>
+				<value>세 번째 미니</value>
+			</list>
+		</property>
 	</bean>
 </beans>
