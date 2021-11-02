@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+	<!-- 스프링이 객체간의 의존관계를 설정하고 관리하는 파일 스프링에서는 자바객체를 bean이라고 합니다. -->
+	<!-- id는 bean의 식별자(자바의 객체변수명) -->
+	<bean class="day1.BoardController" id="boardController">
+		<!-- name은 의존관계가 설정된 필드변수명, ref는 의존관계에 주입할 bean -->
+		<property name="service" ref="boardService"></property>
+	</bean>
+
+	<bean class="day1.BoardService" id="boardService">
+		<property name="dao" ref="boardDao"></property>
+	</bean>
+
+	<bean class="day1.BoardDao" id="boardDao">
+		<!-- bean이 아닌 String을 줄 때, value 이용 -->
+		<property name="dbFactory" value="Mybatis"></property>
+	</bean>
+</beans>
