@@ -14,7 +14,7 @@ public class MemberServiceMyImpl implements MemberService {
 	// public MemberServiceMyImpl() {}
 
 	public MemberServiceMyImpl(MemberDao dao) {
-		System.out.println("MemberServiceMyImpl create.///////////////////");
+		System.out.println("MemberService마이Impl create.///////////////////");
 		this.dao = dao;
 	}
 
