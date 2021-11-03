@@ -5,7 +5,9 @@
 
 <configuration>
 	  <typeAliases>
-	   	<typeAlias type="com.gb.dto.BoardDto" alias="Board"/>
+	   	<typeAlias type="jcpdev.day2.dto.BoardDto" alias="Board"/>
+	   	<typeAlias type="jcpdev.day2.dto.PageDto" alias="PageDto"/>
+	   	<typeAlias type="jcpdev.day2.dto.Customer" alias="Customer"/>
 	  </typeAliases>
 </configuration>
 
