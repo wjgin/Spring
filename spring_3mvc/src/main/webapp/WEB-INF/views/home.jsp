@@ -40,7 +40,11 @@
 		<li><a href="param?action=delete">파라미터로 request 매핑하기_정상처리</a></li>
 		<li><a href="param?action=insert">파라미터로 request 매핑하기_오류 예상</a></li>
 		<li><a href="param">파라미터로 request 매핑하기_오류 예상</a></li>
-		<li><a href="mv">mv가기</a></li>
+		</ul>
+	<ul>	
+		<li><a href="mv">ModelAndView 테스트 가기</a></li>
+		<li><a href="redirect">hello redirect 테스트</a></li>
+		<li><a href="redirect2">redirect getone with idx 테스트</a></li>
 	</ul>
 
 </body>

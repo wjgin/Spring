@@ -135,5 +135,20 @@ public class HomeController {
 		// view파일과 데이터가 담긴 model을 리턴하기
 		return new ModelAndView("regist", model);
 	}
+	
+	// 지금까지는 jsp와 비교했을 때, view에 대해서 pageContext.forward(view파일)
+	
+	// jsp에서 요청 변경 response.sendRedirect
+	@RequestMapping(value = "redirect")
+	public String redirect() {
+		
+		return "redirect:hello"; // 요청을 hello로 변경
+	}
+	
+	@RequestMapping(value = "redirect2")
+	public String redirect2(Model model) {
+		model.addAttribute("idx", 55);
+		return "redirect:getone"; // model객체를 사용하는 redirect의 경우 애트리뷰트가 파라미터로 전달
+	}
 		
 }
