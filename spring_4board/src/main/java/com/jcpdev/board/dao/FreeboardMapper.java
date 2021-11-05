@@ -27,7 +27,7 @@ public interface FreeboardMapper {
 
 	void updateReadCnt(int idx);
 
-	int searchCount(Map<String, String> map); // 검색 카운트
+	int searchCount(Map<String, Object> map); // 검색 카운트
 
 	List<Board> searchList(PageDto dto); // 검색 게시글
 }

@@ -14,5 +14,6 @@
 <hr/>
 <a href="community">커뮤니티</a>
 <a href="community/list">커뮤니티 리스트</a>
+<a href="community/list2">리스트 2 테스트</a>
 </body>
 </html>

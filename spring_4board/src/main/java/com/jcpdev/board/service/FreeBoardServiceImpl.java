@@ -32,6 +32,8 @@ public class FreeBoardServiceImpl implements FreeboardService{
 
 	@Override
 	public List<Board> getPagelist(PageDto dto) {
+		
+		
 		return dao.getPagelist(dto);
 	}
 
@@ -56,7 +58,7 @@ public class FreeBoardServiceImpl implements FreeboardService{
 		
 	}
 	@Override
-	public int searchCount(Map<String,String> map) {
+	public int searchCount(Map<String,Object> map) {
 		//paging에 검색을 위한 필드와 검색어 속성 포함
 		return dao.searchCount(map);
 	}
@@ -67,5 +69,30 @@ public class FreeBoardServiceImpl implements FreeboardService{
 		return dao.searchList(dto);
 	}
 	
-
+	@Override
+	public Map<String, Object> searchList2(Map<String, Object> param){
+		
+		List<Board> list;
+		int totalCount;
+		PageDto pageDto;
+		
+		int currentPage;//현재 페이지
+		int pageSize=10;
+		String page=(String) param.get("page");
+		if(page==null || page.trim().length()==0) currentPage = 1;
+		else currentPage = Integer.parseInt(page);   //page파라미터가 숫자로 넘어온경우만 실행. 
+		param.put("currentPage", currentPage);
+		param.put("pageSize", pageSize);
+		
+		String findText = (String) param.get("findText");
+		String field = (String) param.get("field");
+		totalCount = searchCount(param);
+		
+		pageDto=new PageDto(currentPage, pageSize, totalCount, field, findText);
+		list = dao.searchList(pageDto);
+		param.put("page", pageDto);
+		param.put("list", list);
+		
+		return param;
+	}
 }

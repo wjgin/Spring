@@ -16,6 +16,8 @@ public interface FreeboardService {
 	Board getBoardOne(int idx);
 	int update(Board dto);
 	void updateReadCnt(int idx);
-	int searchCount(Map<String,String> map);
+	int searchCount(Map<String,Object> map);
 	List<Board> searchList(PageDto dto);
+	Map<String, Object> searchList2(Map<String, Object> param);
+	
 }
