@@ -5,8 +5,8 @@
 <mapper namespace="com.jcpdev.board.dao.CommentMapper"> <!-- namespace : java 인터페이스와 매핑될 파일 지정 -->
 
 <insert id="insert" parameterType="Comment">  
-		INSERT INTO board_comment (mref,midx,name,content)
-		VALUES (#{mref},#{midx},#{name},#{content})
+		INSERT INTO board_comment (mref, name,password,content)
+		VALUES (#{mref},#{name},#{password},#{content})
 	</insert>
 	<select id="commentList" resultType="Comment" parameterType="int">
 		SELECT * FROM board_comment WHERE mref=#{mref}
@@ -15,7 +15,7 @@
 		SELECT count(*) FROM board_comment WHERE mref=#{mref}
 	</select>
 	
-	<update id="update" parameterType="java.util.HashMap">
+	<update id="update" parameterType="java.util.Map">
 		UPDATE board_comment set content=#{content} where idx=#{idx}
 	</update>
 	

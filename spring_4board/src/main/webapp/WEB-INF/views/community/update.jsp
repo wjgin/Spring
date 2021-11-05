@@ -16,7 +16,7 @@ function post_data() {
 <body>
 <h3>동아리 커뮤니티 글 수정</h3>
 <hr>
-<form name="frm1" method="post" action="updateAction.jsp">
+<form name="frm1" method="post" action="update?page=${page }&field=${field}&findText=${findText}">
  
  <input type="hidden" name="idx" value="${bean.idx }">
  <input type="hidden" name="pno" value="${pno }">

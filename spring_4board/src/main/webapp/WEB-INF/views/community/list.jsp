@@ -35,7 +35,7 @@
  	<c:forEach var="vo" items="${list}"> <!-- vo가 Freeboard타입  blists.getList() 실행-->
 	<tr>
 		<td>${vo.idx }</td> 	
- 		<td><a href="detail?idx=${vo.idx}&page=${page.currentPage}" class="title">${vo.subject }</a>
+ 		<td><a href="detail?idx=${vo.idx}&page=${page.currentPage}&field=${field}&findText=${findText}" class="title">${vo.subject }</a>
  		...<span style="color:orange;font-size: 80%;">(${vo.commentCount})
  		</span></td>
  		<td>${vo.name }</td>

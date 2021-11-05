@@ -1,5 +1,8 @@
 package com.jcpdev.board.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +25,12 @@ public class CommentController {
 	//리퀘스트핸들러매핑을 파라미터(get)로 한다.
 	@RequestMapping(params="action=insert",method=RequestMethod.POST)
 	public String insert(@ModelAttribute Comment comt,int page, int func,Model model ) {
-		if(func==1) {
+		if(func == 1) {	// 댓글 추가
 			//댓글 idx는 자동증가 컬럼
 			service.insert(comt);
 		//	service.updateCommentCntInc(comt.getMref());		//댓글갯수 1증가 테이블 컬럼 업데이트
-		}else if (func==2){
-	//		service.update(comt.getIdx(),comt.getContent());
+		}else if (func == 2){	// 댓글 수정
+			service.update(comt.getIdx(), comt.getContent());
 		}
 		model.addAttribute("idx", comt.getMref());
 		model.addAttribute("page", page);

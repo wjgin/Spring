@@ -1,7 +1,6 @@
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -52,13 +51,13 @@
 	}
 	
 	//메인글 삭제 확인
-	function deleteOk(idx,cpage){
+	function deleteOk(idx,cpage,field,findText){
 		var yn= confirm( '글을 삭제하시겠습니까?');
 		
 		if(yn){
 			alert('글 ' + idx +'를 삭제합니다.');
 			//수정해야 실행됩니다.
-			location.href='deleteAction.jsp?func=2&idx='+idx+'&page='+cpage;
+			location.href='delete?idx='+idx+'&page='+cpage+'&field='+ field +'&findText='+findText;
 		}
 	}
 
@@ -90,9 +89,9 @@
  		<pre>${bean.content }</pre></div></td>   <!-- 엔터,탭,기호 등 텍스트 그대로 출력할 때 사용 -->
  	</tr>
  	<tr><td colspan="4" align="center"><br>
- 	<a class="button" href="update?func=view&idx=${bean.idx }&page=${page}">수정</a>
- 	<a class="button" onclick="javascript:deleteOk(${bean.idx },${page });">삭제</a>
- 	<a class="button" href="list?page=${page }">목록</a><br><br><br>
+ 	<a class="button" href="update?idx=${bean.idx }&page=${page}&field=${field}&findText=${findText}">수정</a>
+ 	<a class="button" onclick="javascript:deleteOk(${bean.idx},${page},'${field}','${findText}');">삭제</a>
+ 	<a class="button" href="list?page=${page }&field=${field}&findText=${findText}">목록</a><br><br><br>
  	</td></tr>
  </table>
  <!-- 메인글 출력 끝 -->

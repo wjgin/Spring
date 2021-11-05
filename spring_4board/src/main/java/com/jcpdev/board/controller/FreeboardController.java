@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,8 +22,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jcpdev.board.model.Board;
 import com.jcpdev.board.model.PageDto;
 import com.jcpdev.board.service.CommentService;
-import com.jcpdev.board.service.CommentServiceImpl;
-import com.jcpdev.board.service.FreeBoardServiceImpl;
 import com.jcpdev.board.service.FreeboardService;
 
 @Controller
@@ -33,6 +32,7 @@ public class FreeboardController {
 	// 선언을 인터페이스 타입으로 함
 	// impl이 하나일때는 bytype으로 자동기입되만 여러개일 때는 @qualifier 로 구분
 	@Autowired
+	@Qualifier(value="freeBoardServiceImpl")
 	FreeboardService service;
 
 	@Autowired
@@ -72,6 +72,7 @@ public class FreeboardController {
 		map.put("findText", findText);
 		map.put("page", pageDto); // view에게 전달할 모델객체 설정
 		map.put("list", list); // "
+		
 		model.addAllAttributes(map); // 위에 4개의 put 실행한 map객체를 애트리뷰트에 저장한다.
 
 		return "community/list";
@@ -84,24 +85,28 @@ public class FreeboardController {
 		
 		// 비지니스로직 실행 후 파라미터 넘기기
 		param = service.searchList2(param);
+		
 		model.addAllAttributes(param);
 		
 		return "community/list";
 	}
 
-	// 상세보기 : 미구현
+	// 상세보기
 	@RequestMapping("/detail")
-	public String detail(@RequestParam Map<String, Object> param, Model model) {
+	public void detail(@RequestParam Map<String, Object> param, Model model) {
 		
 		int idx = Integer.parseInt((String) param.get("idx"));
-		String page = (String)param.get("page");
 		
-		Board bean = service.getBoardOne(idx);
+		cmtservice.updateCountAll(idx); // 댓글 개수 초기화
 		
-		model.addAttribute("bean", bean);
-		model.addAttribute("page", page);
+		model.addAttribute("bean", service.getBoardOne(idx));
+		model.addAttribute("page", (String)param.get("page"));
+		model.addAttribute("cmtlist", cmtservice.commentList(idx)); // 리스트 생성후 바로 넘기기
+		model.addAttribute("cr", "\n");
+		model.addAttribute("field", (String)param.get("field"));
+		model.addAttribute("findText", (String)param.get("findText"));
 		
-		return "community/detail";
+		// return community/detail; 이 생략됨.
 	}
 
 	// 글쓰기 - view : insert() 메소드
@@ -113,19 +118,48 @@ public class FreeboardController {
 	// 글쓰기 - 저장 : save()메소드 리다이렉트 list로.
 	@RequestMapping(value = "/save")
 	public String save(@ModelAttribute Board board) {
+// @ModelAttribute 생략가능 : form 입력 -> @ModelAttribute -> 컨트롤러 -> @ModelAttribute -> view
 		service.insert(board);
 
 		return "redirect:/community/list";
 	}
 
-	// 수정
+	// 수정 화면 표시
 	@RequestMapping(value = "update", method = RequestMethod.GET)
 	public void update(@RequestParam Map<String, String> param, Model model) { // @RequestParam Map<String, String>
 																				// param
 		model.addAttribute("bean", service.getBoardOne(Integer.parseInt(param.get("idx"))));
+		model.addAttribute("page", param.get("page"));
+		model.addAttribute("field", param.get("field"));
+		model.addAttribute("findText", param.get("findText"));
 	}
 
-	// 삭제 : 미구현
+	// 수정내용 저장
+	@RequestMapping(value="update", method=RequestMethod.POST)
+	public String save2(Board board, String page, String field, String findText, Model model) {
+		// board는 생략된 @ModelAttribute detail.jsp의 Board dto를 매핑해서 가져옴
+
+		service.update(board);
+		model.addAttribute("idx", board.getIdx());
+		model.addAttribute("page", page);
+		model.addAttribute("field", field);
+		model.addAttribute("findText", findText);
+		return "redirect:detail";
+	}
+	
+	// 삭제
+	@RequestMapping(value="delete")
+	public String delete(int idx, int page, String field, String findText, Model model) {
+		
+		service.delete(idx);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("field", field);
+		model.addAttribute("findText", findText);
+		return "redirect:list";
+	}
+	
+	
 
 	@ExceptionHandler(NumberFormatException.class)
 	public ModelAndView handleErr(HttpServletRequest request) {
