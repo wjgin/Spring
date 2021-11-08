@@ -1,23 +1,18 @@
 package com.jcpdev.board.controller;
 
-
-import org.springframework.stereotype.Controller;
+import javax.servlet.http.HttpSession;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import com.jcpdev.board.model.Customer;
 import com.jcpdev.board.service.CustomerService;
 
-@Controller
-@SessionAttributes("customer")
-public class LoginController {
+public class LoginController2 {
 	
 	private final CustomerService service;
 	
-	public LoginController(CustomerService service) {
+	public LoginController2(CustomerService service) {
 		this.service = service;
 	}
 	
@@ -30,12 +25,15 @@ public class LoginController {
 	
 	// 로그인 정보를 Model객체로 전달
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String loginOk(String email, String password, Model model) {	// 보안을 위해서 비밀번호가 model에 안남아있게하기 위해서 파라미터로 받기
+	//  @ModelAttribute("customer")가 생략됨. Model객체는 계속 남아있음(request로, 파라미터처럼 1회성이 아님)
+	//		ㄴ 파라미터가 자동 매핑되어서 객체가 생성됨
+	//	public String loginOk(Customer customer, Model model, HttpSession session) {	// Customer은 model객체(로그인 정보가 저장된 상태)
+	public String loginOk(String email, String password, Model model, HttpSession session) {	// 보안을 위해서 비밀번호가 model에 안남아있게하기 위해서 파라미터로 받기
 		Customer result= service.login(Customer.builder().email(email).password(password).build());
 		if(result != null) {
 			// 로그인 성공 - session에 result를 저장
 			// customer.setPassword(null);	// 서버에서 모델 비밀번호 지워버리기(모델의 경우 남아있기에)
-			model.addAttribute("customer", result);	// @SessionAttributes로 sessionScope에 저장함
+			session.setAttribute("customer", result);
 			return "home";
 		} else {
 			// 로그인 실패
@@ -47,12 +45,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="logout")
-//	public String logout(HttpSession session) {
-	public String logout(SessionStatus status) {
-//		session.invalidate();  // 서버가 JSESSIONID는 새로부여, @SessionAttributes 설정은 남아있다.
-		status.setComplete();  // @SessionAttributes로 설정된 애트리뷰트를 clear 한다.
-								// ㄴ HttpSession의 removeAttribute() 메소드와 유사
-		return "redirect:/";
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "home";
 	}
 	
 	
