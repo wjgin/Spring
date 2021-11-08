@@ -1,0 +1,47 @@
+package com.jcpdev.board.interceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
+
+// 가로채기
+//Interceptor : 컨트롤러 핸들러 메소드 실행 이전에 필요한 작업들 수행, HandlerInterceptor 인터페이스 구현이 필요하다.
+public class UserInterceptor implements HandlerInterceptor {  
+	private static final Logger log = LoggerFactory.getLogger(UserInterceptor.class);
+	@Override
+	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object arg2, Exception arg3)
+			throws Exception {
+		log.info("3.view 생성까지 완료 후에");   //후처리
+		log.info("-" + arg2);
+		log.info("-" + arg3);
+	}
+
+	@Override
+	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object arg2, ModelAndView arg3)
+			throws Exception {
+		log.info("2.hadler method 실행 완료, view를 생성하기 전에.");   //전처리2
+		log.info("-" + arg2);
+		log.info("-" + arg3);
+		response.setContentType("text/plain; charset=UTF-8");
+	}
+
+	// 특정 url은 로그인이 되었는지 검사하여 로그인되었을 때 return true;
+	//								안되어있으면 return false;	=> 로그인 페이지
+	@Override
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object arg2) throws Exception {
+		  log.info("1.handler method 매핑 이전에 실행.");   //전처리1
+		  log.info("-" + arg2);
+		
+		  String reqUrl = request.getServletPath();    //클라이언트요청 url 확인을 위한 출력
+		  log.info("///////" + reqUrl); 
+		  reqUrl = request.getRequestURL().toString();
+		  log.info("///////" + reqUrl); 
+		  return true;
+	}	
+
+}

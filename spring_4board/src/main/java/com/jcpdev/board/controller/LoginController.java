@@ -23,9 +23,15 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "login", method = RequestMethod.GET)
-	public String login() {
+	public String login(String alert, Model model) {
 		
-		return "login"; // 로그인 버튼 -> login.jsp(view) -> 로그인 입력 후 버튼 -> post
+		if(alert != null && alert.equals("y")) {
+	        model.addAttribute("message","로그인이 필요합니다." );  
+	        model.addAttribute("url","login");
+	        return "alertLogin";
+		} else {
+			return "login"; // 로그인 버튼 -> login.jsp(view) -> 로그인 입력 후 버튼 -> post
+		}
 	}
 	
 	// 로그인 정보를 Model객체로 전달

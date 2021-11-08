@@ -87,6 +87,7 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="update")
+	// 세션에서 받아와서 보여주기
 	public void update(@SessionAttribute("customer") Customer customer){
 
 	}
