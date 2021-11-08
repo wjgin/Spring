@@ -129,9 +129,7 @@ public class FreeboardController {
 	public void update(@RequestParam Map<String, String> param, Model model) { // @RequestParam Map<String, String>
 																				// param
 		model.addAttribute("bean", service.getBoardOne(Integer.parseInt(param.get("idx"))));
-		model.addAttribute("page", param.get("page"));
-		model.addAttribute("field", param.get("field"));
-		model.addAttribute("findText", param.get("findText"));
+		model.addAllAttributes(param);
 	}
 
 	// 수정내용 저장
