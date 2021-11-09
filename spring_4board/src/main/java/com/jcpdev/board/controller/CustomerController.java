@@ -2,7 +2,6 @@ package com.jcpdev.board.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +16,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.jcpdev.board.dao.CustomerMapper;
 import com.jcpdev.board.model.Customer;
 import com.jcpdev.board.service.CustomerService;
 
 @Controller
 @RequestMapping("/customer")
-@SessionAttributes(names={"join"})
+@SessionAttributes(names={"join", "customer"})	// session애트리뷰터 여러개의 경우 리스트형식
+
 public class CustomerController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
@@ -97,9 +96,10 @@ public class CustomerController {
 		
 		service.update(mod_cus);
 		ModelAndView mv = new ModelAndView();
+		model.addAttribute("customer", mod_cus);
 		mv.addObject("alert", "");
 		mv.addObject("customer", mod_cus);
-		mv.setViewName("customer/update");		//경로 안하면 오류. default 전달할 때와 다르니 주의
+		mv.setViewName("customer/detail");		//경로 안하면 오류. default 전달할 때와 다르니 주의
 		return mv;
 	}
 	

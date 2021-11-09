@@ -89,8 +89,10 @@
  		<pre>${bean.content }</pre></div></td>   <!-- 엔터,탭,기호 등 텍스트 그대로 출력할 때 사용 -->
  	</tr>
  	<tr><td colspan="4" align="center"><br>
- 	<a class="button" href="update?idx=${bean.idx }&page=${page}&field=${field}&findText=${findText}">수정</a>
- 	<a class="button" onclick="javascript:deleteOk(${bean.idx},${page},'${field}','${findText}');">삭제</a>
+ 	<c:if test="${sessionScope.customer.name == bean.name}">
+ 		<a class="button" href="update?idx=${bean.idx }&page=${page}&field=${field}&findText=${findText}">수정</a>
+ 		<a class="button" onclick="javascript:deleteOk(${bean.idx},${page},'${field}','${findText}');">삭제</a>
+ 	</c:if>
  	<a class="button" href="list?page=${page }&field=${field}&findText=${findText}">목록</a><br><br><br>
  	</td></tr>
  </table>

@@ -8,3 +8,9 @@ insert into customer_1 (name, password , email, gender)
 -- 해시함수를 이용한 해시코드는 항상 일정한 길이
 -- sha(secure hash algorithm) 해시함수 256비트 또는 512비트로 해시코드 생성
 select sha2('1111', 256); -- 1111을 256비트 sha 해시함수 (16진수문자 256/4 글자)
+select  idx,email,name,gender,hobby,age,address from customer_1 where email='hong@gmail.com' and password=sha2('1111',256);
+
+alter table customer_1 change address addr varchar(30);
+
+select * from customer_1 c ;
+commit;

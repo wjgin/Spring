@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,10 +96,25 @@ public class FreeboardController {
 
 	// 상세보기
 	@RequestMapping("/detail")
-	public void detail(@RequestParam Map<String, Object> param, Model model) {
+	public String detail(@RequestParam Map<String, Object> param, Model model
+			, HttpServletResponse response
+			, @CookieValue(name="read", defaultValue = "abcde") String readIdx) {
+		// 읽어올 쿠키 이름은 read쿠기 값이 없다면 기본값 "abcde", 쿠키값을 저장할 변수는 readIdx, default 값이 없으면 처음실행시 쿠키값 없어서 오류
 		
 		int idx = Integer.parseInt((String) param.get("idx"));
 		
+		// readCookie값의 예시: abcde/3/67/178
+		if(!readIdx.contains(String.valueOf(idx))) {	// idx 정수를 String으로 변환 후 더하기
+			// 읽지 않은 경우,
+			readIdx += "/" + idx;
+			// 조회수 증가
+			service.updateReadCnt(idx);
+		}
+		Cookie cookie = new Cookie("read", readIdx);
+		cookie.setMaxAge(30*60);	// 초 단위, 30분
+		cookie.setPath("/board");
+		response.addCookie(cookie);	// 기존 쿠기 넘겨주기
+
 		cmtservice.updateCountAll(idx); // 댓글 개수 초기화
 		
 		model.addAttribute("bean", service.getBoardOne(idx));
@@ -106,7 +124,8 @@ public class FreeboardController {
 		model.addAttribute("field", (String)param.get("field"));
 		model.addAttribute("findText", (String)param.get("findText"));
 		
-		// return community/detail; 이 생략됨.
+		
+		return "community/detail"; // 이 생략됨.
 	}
 
 	// 글쓰기 - view : insert() 메소드
