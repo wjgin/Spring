@@ -14,3 +14,13 @@ alter table customer_1 change address addr varchar(30);
 
 select * from customer_1 c ;
 commit;
+
+alter table gallery add title varchar(50);
+
+create table gallery_1 (
+	pno int primary key auto_increment,
+	title varchar(50),
+	filename varchar(50)
+);
+
+select * from gallery_1 g ;

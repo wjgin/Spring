@@ -21,6 +21,10 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	/*
+	 * @Autowired GalleryImpl service;
+	 */
+	
 	// request.getContextPath : http://localhost:portNum/projectname/ 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -35,5 +39,15 @@ public class HomeController {
 		
 		return "home";
 	}
+	
+	/*
+	 * @RequestMapping(value = "/gallery", method = RequestMethod.GET) public String
+	 * gallery(Model model) { logger.info("Welcome gallery!");
+	 * 
+	 * 
+	 * model.addAttribute("list", service.getAll());
+	 * 
+	 * return "gallery/gallery"; }
+	 */
 	
 }

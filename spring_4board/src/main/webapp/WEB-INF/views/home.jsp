@@ -14,9 +14,10 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 <hr/>
-<a href="community">커뮤니티</a>
+<a href="community/">커뮤니티</a>
 <a href="community/list">커뮤니티 리스트</a>
-<a href="community/list2">리스트 2 테스트</a><br>
+<a href="community/list2">리스트 2 테스트</a>
+<a href="gallery/">갤러리 가기</a><br>
 <!-- model객체 customer와 session애트리뷰터 customer 이름이 같기에 sessionScope을 명시해줘서 가져오기 -->
 <c:if test="${sessionScope.customer != null }">
 	${sessionScope.customer.name}님(${sessionScope.customer.email}) 환영 합니다.<br>

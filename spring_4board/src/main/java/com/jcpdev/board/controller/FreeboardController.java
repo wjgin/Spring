@@ -112,8 +112,11 @@ public class FreeboardController {
 		}
 		Cookie cookie = new Cookie("read", readIdx);
 		cookie.setMaxAge(30*60);	// 초 단위, 30분
-		cookie.setPath("/board");
+		cookie.setPath("/board");	// path 하위에서 cookie정보다 계속 보임
 		response.addCookie(cookie);	// 기존 쿠기 넘겨주기
+		// cookie는 javascript에서 접근 가능: document.cookie -> 보안 취약점 
+		// => HttpOnly true -> 클라이언트단에서 쓰기안됨 secure속성으로 암호화해서 전송 https 프로토콜 통신으로만 사용
+		
 
 		cmtservice.updateCountAll(idx); // 댓글 개수 초기화
 		
