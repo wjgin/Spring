@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>  <!--not #strings.isEmpty(customer)  -->
+<body>
+<a href="community/list">커뮤니티</a><br>
+<a href="community/list2">커뮤니티(2)-컨트롤러 수정 테스트</a><br>
+<div th:if="${customer !=null }">  <!-- customer는 세션애트리뷰트입니다. -->
+	<!-- 출력시 양쪽 대관호([[]])를 사용해야함 -->
+	[[${sessionScope.customer.name }]]님([[${sessionScope.customer.email }]]) 환영합니다.<br>
+	<a href="customer/detail">나의 정보</a><br>
+	<a href="logout">로그아웃</a><br>
+</div>
+<!-- unless는 if조건과 동일하게 적어서 반대조건 사용 -->
+<div th:unless="${customer !=null}">
+	<a href="login">로그인</a><br>
+	<a href="customer/join?start=1">회원가입</a><br>
+</div>
+</body>
+</html>

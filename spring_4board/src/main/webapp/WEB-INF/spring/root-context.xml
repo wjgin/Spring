@@ -46,7 +46,7 @@
 
 	<!-- mapper 자동 스캔 패키지 설정 -->
 	<mybatis-spring:scan
-		base-package="com.jcpdev.board.dao" />
+		base-package="com.jcpdev.board2.dao" />
 	<!-- 참고: https://mybatis.org/spring/ko/mappers.html -->
 
 </beans>

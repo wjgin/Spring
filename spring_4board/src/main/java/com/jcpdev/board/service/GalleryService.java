@@ -53,21 +53,4 @@ public class GalleryService {
 
 	      return gdao.insert(vo);
 	   }
-	
-	// 랜덤 스트링 만들기
-	public String randomString(String oldfile) {
-	      int leftLimit = 48; // 숫자 '0'
-	      int rightLimit = 122; // 알파벳 'z'
-	      int targetStringLength = 10;
-	      Random random = new Random();
-	      String ext = oldfile.substring(oldfile.indexOf("."), oldfile.length());
-	      String rString = random.ints(leftLimit,rightLimit + 1)
-	        .filter(i -> (i <= 57 || (i >= 65 && i <= 90) || i >= 97))
-	        .limit(targetStringLength)
-	        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-	        .toString();
-	      
-	      //또는 UUID.randomUUID().toString();
-	      return rString+ext;
-	   }
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>MYBOARD 리스트</title>
+<link rel="stylesheet" href="/resources/css/freeboard2.css">
+<link rel="stylesheet" href="/resources/css/bootstrap.min.css">
+<style type="text/css">
+.table th {
+	background: #4080bf;
+	color: white;
+}
+</style>
+</head>
+<body>
+	<div class="jumbotron">
+		<h2>MYBOARD</h2>
+		<p>spring boot 와  thymeleaf적용하여 처음 만드는 게시판</p>
+	</div>
+	<div class="container">
+		<h3 style="text-align: center; color: #4080bf;">글 목록</h3>
+		<h5 style="text-align: center; color: blue;">
+		현재 페이지 : <span th:text="${page.currentPage}"></span>/ 전체페이지 : 
+		<span th:text="${page.totalPage}"></span>,데이터 갯수 : <span th:text="${page.totalCount}"></span>
+		</h5>	
+		<table class="table">
+			<tr>
+				<th width="10%">번호</th>
+				<th width="45%">제목</th>
+				<th width="15%">작성자</th>
+				<th width="10%">조회수</th>
+				<th width="20%">작성일</th>
+			</tr>
+			<th:block th:each="vo : ${list}">
+				<tr>
+					<td>[[${vo.idx }]]</td>
+					<td>
+					<a href="detail?idx=&page=">[[${vo.subject }]]</a>
+						...<span style="color: orange;">([[${vo.commentCount }]]) </span></td>
+					<td th:text="${vo.name }"></td>
+					<td th:text="${vo.readCount }"></td>
+					<td th:text="${#calendars.format(vo.wdate,'yyyy-MM-dd')}">]
+					</td>
+				</tr>
+			</th:block>
+			</table>
+			<div style="text-align: right; padding: 4px;">
+			<a href="insert" class="btn btn-success">글쓰기</a>
+		</div>
+		<!-- 페이지 이동 : 자바의 T연산자를 이용하여 클래스 인스턴스를 지정하거나 클래스의 static 메소드를 사용할 수 있다.-->
+		<div style="text-align: center;">
+		<div th:with="start=${page.startPage},last=(${page.startPage+9<page.totalPage?start+9:page.totalPage})">
+				<a th:href="@{.(page=1)}" class="btn btn-default">&lt;&lt;</a>
+				
+				<a th:href="${page.startPage==1}? '#':@{.(page=${page.currentPage-10})}" th:class="${page.startPage==1}? 'disabled'" class="btn btn-default">&lt;</a>
+				<a th:each="i:${#numbers.sequence(start,last)}" 
+				th:href="@{.(page=${i})}" th:text="${i}" th:class="${i==page.currentPage}?'':'btn btn-default'"></a>
+
+				<a th:href="${page.endPage==page.totalPage}? '#':@{.(page=${page.currentPage+10})}" th:class="${page.endPage==page.totalPage}? 'disabled'" class="btn btn-default">&gt;</a>
+				<a th:href="@{.(page=${page.totalPage})}" class="btn btn-default">&gt;&gt;</a>
+				</div>
+		</div><!--  thymeleaf Numbers 클래스를 이용하여 배열생성 #numbers.sequence -->
+	</div> <!-- container -->
+</body>
+</html> 

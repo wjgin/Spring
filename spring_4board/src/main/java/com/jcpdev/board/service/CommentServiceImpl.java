@@ -33,7 +33,7 @@ public class CommentServiceImpl implements CommentService{
 
 	@Override
 	public int update(int idx, String content) {
-		Map<String, Object> map = new HashMap<>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("idx", idx);
 		map.put("content", content);
 		

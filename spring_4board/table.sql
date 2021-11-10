@@ -24,3 +24,26 @@ create table gallery_1 (
 );
 
 select * from gallery_1 g ;
+
+drop table if exists board;
+drop table if exists users;
+create table users(
+   mno int(12) auto_increment,
+   email varchar(20) not null,
+   password varchar(64) not null,
+   name varchar(20) not null,
+   reg_date timestamp,  -- 등록날짜
+   mod_date timestamp,    -- 수정날짜
+   primary key (mno)
+);
+
+create table board(
+   bidx int(9) auto_increment,
+   subject varchar(30) not null,
+   content varchar(200) not null,
+   mno int(9),
+   reg_date timestamp,  -- 등록날짜
+   mod_date timestamp,  -- 수정날짜
+   primary key(bidx),
+   foreign key(mno) references users(mno)
+);
