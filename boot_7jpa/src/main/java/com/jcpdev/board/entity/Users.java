@@ -28,7 +28,7 @@ public class Users extends BaseEntity{
 	@Column(nullable = false, unique = true)	// 컬럼 어노테이션, 변수명과 같으면 생략가능
 	private String email;
 	
-	@Column
+	@Column(updatable = false)	// update할 경우 password 컬럼은 미 포함
 	private String password;
 	
 	@Column
