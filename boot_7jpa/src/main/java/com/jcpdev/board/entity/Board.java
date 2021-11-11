@@ -11,9 +11,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Builder
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="board")	// boar 테이블과 매핑(클래스명과 동일하다면 생략가능)
@@ -23,10 +25,13 @@ public class Board extends BaseEntity{
 	@Id	// 기본키 설정
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long bidx;			// int는 10자리 정수
+	
 	private String subject;
 	private String content;
 	
 	
 	@ManyToOne				// 다대일 : 한 사용자가 여러개의 글을 작성 가능
 	private Users writer; 	// 단방향 관계 설정(Users에는 관계 설정 안함)
+							// 실제 테이블의 외래키 관계
+	// 실제 테이블 컬럼명은 writer_mno 이여야함
 }

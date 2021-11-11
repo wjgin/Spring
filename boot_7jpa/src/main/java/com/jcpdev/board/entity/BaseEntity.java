@@ -11,10 +11,12 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Getter;
+import lombok.ToString;
 
 @MappedSuperclass	// 테이블 생성은 하지않는 부모 클래스
 @EntityListeners(value= {AuditingEntityListener.class})
 @Getter
+@ToString
 public abstract class BaseEntity{
 	   @CreatedDate	// insert 할 때, 날짜 시간
 	   @Column(name="reg_date",updatable=false) // updatable=false: update쿼리에는 사용하지 않는다.
